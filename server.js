@@ -1,4 +1,4 @@
-// server.js - VERSÃO COMPLETA E TESTADA
+// server.js - VERSÃO PARA RAILWAY
 const express = require('express');
 const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
@@ -6,22 +6,24 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
-const JWT_SECRET = 'auracash_secret_key_2024';
+
+// 🔥 Ajustado para Railway
+const PORT = process.env.PORT || 3000;
+const JWT_SECRET = process.env.JWT_SECRET || 'auracash_secret_key_2024';
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// Conexão MySQL
+// 🔥 Configuração MySQL para Railway
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '0126',
-    database: 'auracash'
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
+    port: process.env.MYSQLPORT || 3306
 };
-
 let db;
 
 async function connectDB() {
